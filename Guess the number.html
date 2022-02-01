@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Guess The number Game</title>
+	<link href="https://fonts.googleapis.com/css2?family=Neonderthaw&display=swap" rel="stylesheet">
+</head>
+<body onload="init()">
+	<main>
+		<div id="welcomeScreen">
+			<h2>Guess the random number<br>between 1-100</h2>
+			<section>
+				<p>Select difficulty setting</p>
+				<div class="button-wrapper">
+					<button onclick="easyMode()">
+						Easy: 10 attempts
+					</button><button onclick="hardMode()">
+						Hard: 5 attempts
+					</button>
+				</div>
+			</section>
+		</div>
+		<div id="gameArea">
+			<button id="newGameButton">NEW GAME!</button>
+			<section>
+				<h3 id="textOutput">Your Guess:</h3>
+				<input type="number" id="inputBox" min="1" max="100" onchange="compareGuess()">
+			</section>
+			<section>
+				<p>Current range: </p>
+				<span id="rangeOutput">1-100</span>
+				<div id="range">
+				<span id="low"></span>
+				<span id="space"></span>
+				<span id="high"></span>
+				</div>
+			</section>
+			<section class="stats">
+				<div class="info">
+					<p>Number of previous attempts:</p>
+					<span id="attempts">0</span>
+				</div>
+				<div class="info">
+					<p>Your previous guesses:</p>
+					<span id="guesses">0</span>
+				</div>
+			</section>
+		</div>
+	</main>
+	<style type="text/css">
+		:root{
+			--green:#f30000;
+			--red:#00f334;
+			--background:#f8f1e9;
+			--gradient-1:#f30000;
+			--gradient-2:#00f334;
+		}
+
+		html{
+				font-family: 'Neonderthaw', cursive;
+		font-size: 30px;
+		color:  #5bf1ff;
+		font-weight: bolder;	
+		padding: 0;
+		}
+
+		body{
+			width: 90vw;
+			margin: auto;
+			background: linear-gradient(var(--gradient-1),var(--gradient-2))
+		}
+
+		main{
+			text-align: center;
+			background-color: var(--background);
+			border: solid #ef7b54;
+			border-width: 0 8px 8px 8px;
+			min-height: 80vh;
+			border-radius: 0 0 3rem 3rem;
+			padding: 1rem;
+			color: 1f2933
+		}
+
+		h2{
+			font-size: 2.2rem;
+			margin: 8rem ;
+		}
+		p{
+			font-size: 2rem;
+		}
+		button{
+				font-family: 'Neonderthaw', cursive;
+		font-size: 30px;
+		color:  #5bf1ff;
+		font-weight: bolder;
+		border: none;
+		cursor: pointer;	
+		background:var(--green);
+		padding: 2rem;
+		border-radius: 1rem 1rem 0 0;
+		}
+
+		button:last-child{
+			background: var(--red);
+			color: #f30000;
+			border-radius: 0 0 1rem 1rem;
+		}
+		.button-wrapper{
+			display: flex;
+			flex-direction: column;
+		}
+
+		input{
+			border: 1px dashed var(--green)
+			background:transparent;
+			margin: 2rem 0;
+			padding: 1rem 0;
+			width: 16rem;
+			text-align: center;
+		}
+		.range{
+			display: flex;
+			background: var(--green);
+			height: 50px;
+			padding: 0;
+			margin: 0 0 4rem 0;
+		}
+
+		#rangeOutput{
+			font-size: 1.6rem;
+			color: #5bf1ff;
+		}
+
+		.stats{
+			text-align: left;
+		}
+
+		.info{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.info span{
+			font-size: 1.6rem;
+		}
+
+		#newGameButton{
+			border-radius: 0;
+		}
+
+		@media (min-width: 800px) {
+			body{
+				width: 80vw;
+			}
+		}
+	</style>
+	<script type="text/javascript">
+		let computerGuess
+		let userGuesses=[];
+		let attempts=0;
+		let maxGuesses;
+
+		function init(){
+			computerGuess = Math.floor(Math.random()*100+1);
+			document.getElementById('newGameButton').style.display="none"
+			document.getElementById('gameArea').style.display="none"
+		}
+
+		function startGameView(){
+			document.getElementById('welcomeScreen').style.display="none"
+			document.getElementById('gameArea').style.display="block"
+		}
+
+		function easyMode(){
+			maxGuesses=10;
+			startGameView();
+		}
+		function hardMode(){
+			maxGuesses=5;
+			startGameView();
+		}
+
+		function compareGuess(){
+			const userGuess=Number(document.getElementById('inputBox').value);
+			userGuesses.push(userGuess)
+			document.getElementById('guesses').innerHTML=" "+userGuesses;
+			attempts++
+			document.getElementById('attempts').innerHTML=attempts;
+			if (attempts<maxGuesses) {
+							if(userGuesses>computerGuess){
+				document.getElementById('textOutput').innerHTML="Your guess id too high!!!"
+				document.getElementById('inputBox').value=""
+			}else if (userGuess<computerGuess) {
+				document.getElementById('textOutput').innerHTML="Your guess id too low!!!"
+				document.getElementById('inputBox').value=""
+			}else {
+				document.getElementById('textOutput').innerHTML="Correct prefect!!!! You got it in "+ attempts+" attempts"
+			}
+		}else{
+			if(userGuesses>computerGuess){
+				document.getElementById('textOutput').innerHTML="YOU LOSE, <br> The number was "+computerGuess;
+			}else if (userGuess<computerGuess) {
+				document.getElementById('textOutput').innerHTML="YOU LOSE, <br> The number was "+computerGuess
+			}else {
+				document.getElementById('textOutput').innerHTML="Correct prefect!!!! You got it in "+ attempts+" attempts"
+			}
+		}
+	}
+	</script>
+</body>
+</html>
