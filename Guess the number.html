@@ -22,7 +22,7 @@
 			</section>
 		</div>
 		<div id="gameArea">
-			<button id="newGameButton">NEW GAME!</button>
+			<button id="newGameButton" onclick="newGame()">NEW GAME!</button>
 			<section>
 				<h3 id="textOutput">Your Guess:</h3>
 				<input type="number" id="inputBox" min="1" max="100" onchange="compareGuess()">
@@ -162,6 +162,30 @@
 		let attempts=0;
 		let maxGuesses;
 
+		let low=1
+		let high=100
+
+		function updateRange(){
+			const lowValue=document.getElementById('low')
+			lowValue.style.flex= low+"%"
+			lowValue.style.background="#ef7b54"
+			const space=document.getElementById('space')
+			space.style.flex= high-low+"%"
+			space.style.background="#5bf1ff"
+			const highValue=document.getElementById('high')
+			highValue.style.flex= 100-high+"%"
+			space.style.background="#ef7b54"
+		}
+
+		function gameEnded(){
+			document.getElementById('newGameButton').style.display="inline"
+			document.getElementById('inputBox').setAttribute("readonly","readonly")
+		}
+
+		function newGame(){
+			window.location.reload();
+		}
+
 		function init(){
 			computerGuess = Math.floor(Math.random()*100+1);
 			document.getElementById('newGameButton').style.display="none"
@@ -197,16 +221,21 @@
 				document.getElementById('inputBox').value=""
 			}else {
 				document.getElementById('textOutput').innerHTML="Correct prefect!!!! You got it in "+ attempts+" attempts"
+				gameEnded()
 			}
 		}else{
 			if(userGuesses>computerGuess){
-				document.getElementById('textOutput').innerHTML="YOU LOSE, <br> The number was "+computerGuess;
+				document.getElementById('textOutput').innerHTML="YOU LOSE, <br> The number was "+computerGuess
+				gameEnded();
 			}else if (userGuess<computerGuess) {
 				document.getElementById('textOutput').innerHTML="YOU LOSE, <br> The number was "+computerGuess
+				gameEnded()
 			}else {
 				document.getElementById('textOutput').innerHTML="Correct prefect!!!! You got it in "+ attempts+" attempts"
+				gameEnded()
 			}
 		}
+		updateRange()
 	}
 	</script>
 </body>
