@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Photo Effects App</title>
+</head>
+<body>
+	<main>
+		<canvas id="canvas"></canvas>
+	</main>
+	<aside>
+		<div class="input-wrapper">
+			<label for="uploader">Select file:
+			</label>
+			<input type="file" id="uploader">
+		</div>
+		<div class="effects">
+			<button>Grayscale</button>
+			<button>Sepia effect</button>
+			<button>Invert</button>
+			<button>RGB - RBG</button>
+			<button>RGB - BGR</button><button>RGB - GBR</button>
+			<button>RGB - GRB</button>
+		</div>
+		<div class="controls">
+			<button>Clear</button><button>Download</button>
+		</div>
+	</aside>
+	<script type="text/javascript">
+		const canvas=document.getElementById("canvas")
+		const ctx=canvas.getContext('2d')
+		const img=new Image()
+		function getImage(){
+			const imgToGet=getElementById("uploader").img
+			console.log('imgToGet')
+		}
+		img.src="https://th.bing.com/th/id/OIP.nmyk0fO9vwqKtnmSjyRT5wHaHa?w=168&h=180&c=7&r=0&o=5&pid=1.7"
+		img.onload=()=>{
+			canvas.width=img.width
+			canvas.height=img.height
+			ctx.drawImage(img,0,0)
+		}
+	</script>
+	<style type="text/css">
+		html{
+			font-size: 10px;
+		}
+		body{
+			background:rgb(48,47,47);
+			display: flex;
+			font-direction: column;
+		}
+		main{
+			flex: 3;
+		}
+		aside{
+			flex: 1;
+			margin-left: 0.5rem;
+		}
+		button{
+			text-align: left;
+			background: rgb(21,20,20);
+			padding: 1.6rem 0 1.6 2rem;
+			font-size: 1.6rem;
+			cursor: pointer;
+			color: rgb(212,210,210);
+			border: none;
+			border-bottom: 1px solid;
+		}
+		button:hover{
+			background: rgb(50,47,47);
+		}
+		.effects{
+			display: flex;
+			flex-direction: column;
+		}
+		.controls{
+			display: flex;
+		}
+		.controls>button{
+			flex: 1;
+			border-bottom: none;
+			text-align: center;
+			padding: 1.6rem 0;
+		}
+		label{
+			font-size: 1.8rem;
+			padding-right: 1.6rem;
+		}
+		.input-wrapper{
+			background: gray;
+			padding: 1.6rem;
+		}
+		canvas{
+			width: 100%;
+		}
+		@media(min-width: 1000px){
+			body{
+				font-direction: row;
+			}
+		}
+	</style>
+</body>
+</html>
